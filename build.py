@@ -1,20 +1,14 @@
-from litemapy import Region, BlockState
+from builder.campus.main_hub import build_main_hub
 from builder.exporter import export_region
 
-print("Generating first litematic...")
+print("Generating Main Hub...")
 
-region = Region(0, 0, 0, 9, 1, 9)
-
-white = BlockState("minecraft:white_concrete")
-
-for x in range(9):
-    for z in range(9):
-        region.setblock(x, 0, z, white)
+region = build_main_hub()
 
 export_region(
     region,
-    "output/first_platform.litematic",
-    "First Platform"
+    "output/main_hub.litematic",
+    "Main Hub"
 )
 
 print("Done!")
