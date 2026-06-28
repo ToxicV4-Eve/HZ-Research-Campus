@@ -1,33 +1,20 @@
-from builder.structure import Structure
-from builder.palette import WHITE_CONCRETE
-from builder.geometry import draw_hollow_rectangle
+from litemapy import Region, BlockState
+from builder.exporter import export_region
 
-structure = Structure()
+print("Generating first litematic...")
 
-print("Generating room...\n")
+region = Region(0, 0, 0, 9, 1, 9)
 
-draw_hollow_rectangle(
-    structure,
-    0,
-    0,
-    0,
-    9,
-    9,
-    WHITE_CONCRETE
+white = BlockState("minecraft:white_concrete")
+
+for x in range(9):
+    for z in range(9):
+        region.setblock(x, 0, z, white)
+
+export_region(
+    region,
+    "output/first_platform.litematic",
+    "First Platform"
 )
 
-for z in range(9):
-
-    line = ""
-
-    for x in range(9):
-
-        if structure.get_block(x, 0, z):
-            line += "#"
-        else:
-            line += "."
-
-    print(line)
-
-print()
-print(f"{len(structure.blocks)} blocks placed.")
+print("Done!")
