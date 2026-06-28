@@ -1,36 +1,40 @@
-from .structure import Structure
+from litemapy import BlockState, Region
 
 
-def draw_rectangle(structure: Structure,
-                   x: int,
-                   y: int,
-                   z: int,
-                   width: int,
-                   length: int,
-                   block):
-
+def rectangle(
+    region: Region,
+    x: int,
+    y: int,
+    z: int,
+    width: int,
+    length: int,
+    block: BlockState,
+):
+    """Fill a solid rectangle."""
     for dx in range(width):
         for dz in range(length):
-            structure.set_block(
-                x + dx,
-                y,
-                z + dz,
-                block
-            )
+            region.setblock(x + dx, y, z + dz, block)
 
 
-def draw_hollow_rectangle(structure: Structure,
-                          x: int,
-                          y: int,
-                          z: int,
-                          width: int,
-                          length: int,
-                          block):
+def hollow_rectangle(
+    region: Region,
+    x: int,
+    y: int,
+    z: int,
+    width: int,
+    length: int,
+    block: BlockState,
+):
+    """Draw only the border of a rectangle."""
 
-    for dx in range(width):
-        structure.set_block(x + dx, y, z, block)
-        structure.set_block(x + dx, y, z + length - 1, block)
+    # Top edge
+    rectangle(region, x, y, z, width, 1, block)
 
-    for dz in range(length):
-        structure.set_block(x, y, z + dz, block)
-        structure.set_block(x + width - 1, y, z + dz, block)
+    # Bottom edge
+    rectangle(region, x, y, z + length - 1, width, 1, block)
+
+    # Left edge
+    rectangle(region, x, y, z, 1, length, block)
+
+    # Right edge
+    rectangle(region, x + width - 1, y, z, 1, length, block)
