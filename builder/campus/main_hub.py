@@ -1,11 +1,12 @@
-from builder.geometry import rectangle, hollow_rectangle
+from builder.geometry import rectangle, wall
 from builder.palette import WHITE_CONCRETE
 from litemapy import Region
 
 
 def build_main_hub():
+    
     # Overall build area (large enough for future expansion)
-    region = Region(0, 0, 0, 41, 2, 41)
+    region = Region(0, 0, 0, 41, 6, 41)
 
     white = WHITE_CONCRETE
 
@@ -14,10 +15,19 @@ def build_main_hub():
     # -------------------------
     rectangle(region, 5, 0, 5, 31, 31, white)
 
+    print("Building north wall...")
+
+    wall(region, 10, 1, 10, 10, 5, "north", white)
+
+
     # -------------------------
-    # Exterior walls
+    # Exterior walls (5 blocks tall)
     # -------------------------
-    hollow_rectangle(region, 5, 1, 5, 31, 31, white)
+    wall(region, 5, 1, 5, 31, 5, "north", white)
+    wall(region, 5, 1, 35, 31, 5, "north", white)
+
+    wall(region, 5, 1, 5, 31, 5, "east", white)
+    wall(region, 35, 1, 5, 31, 5, "east", white)
 
     # -------------------------
     # North entrance
